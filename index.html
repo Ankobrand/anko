@@ -24,20 +24,28 @@
 <body>
   <!-- Spline Scene -->
   <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.59/build/spline-viewer.js"></script>
-  <spline-viewer url="https://prod.spline.design/XFsQaTCJYsvjGXd7/scene.splinecode"></spline-viewer>
+  <spline-viewer id="spline-viewer" url="https://prod.spline.design/XFsQaTCJYsvjGXd7/scene.splinecode"></spline-viewer>
 
   <script>
-    // Adjust Spline scene height based on screen size
-    const splineViewer = document.querySelector('spline-viewer');
+    // Get the Spline viewer element
+    const splineViewer = document.getElementById('spline-viewer');
 
-    function adjustHeight() {
+    // Function to adjust the scene size
+    function adjustSceneSize() {
       const isMobile = window.innerWidth <= 768; // Adjust breakpoint as needed
-      splineViewer.style.height = isMobile ? '70vh' : '100vh'; // Adjust height for mobile
+      const sceneHeight = isMobile ? '70vh' : '100vh'; // Adjust height for mobile
+      splineViewer.style.height = sceneHeight;
+
+      // Optional: Adjust the scene's camera or other properties
+      const spline = splineViewer.spline;
+      if (spline) {
+        spline.setSize(window.innerWidth, window.innerHeight); // Update scene size
+      }
     }
 
-    // Adjust height on page load and window resize
-    window.addEventListener('load', adjustHeight);
-    window.addEventListener('resize', adjustHeight);
+    // Adjust size on page load and window resize
+    window.addEventListener('load', adjustSceneSize);
+    window.addEventListener('resize', adjustSceneSize);
   </script>
 </body>
 </html>
