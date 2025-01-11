@@ -30,22 +30,26 @@
     // Get the Spline viewer element
     const splineViewer = document.getElementById('spline-viewer');
 
-    // Function to adjust the scene size
-    function adjustSceneSize() {
+    // Function to adjust the scene size and zoom
+    function adjustScene() {
       const isMobile = window.innerWidth <= 768; // Adjust breakpoint as needed
-      const sceneHeight = isMobile ? '70vh' : '100vh'; // Adjust height for mobile
-      splineViewer.style.height = sceneHeight;
 
-      // Optional: Adjust the scene's camera or other properties
+      // Adjust height for mobile
+      splineViewer.style.height = isMobile ? '100vh' : '100vh';
+
+      // Adjust zoom for mobile
       const spline = splineViewer.spline;
       if (spline) {
-        spline.setSize(window.innerWidth, window.innerHeight); // Update scene size
+        const camera = spline.findObjectByName('Camera'); // Replace 'Camera' with your camera's name
+        if (camera) {
+          camera.position.z = isMobile ? 50 : 100; // Adjust zoom level (smaller value = more zoom)
+        }
       }
     }
 
-    // Adjust size on page load and window resize
-    window.addEventListener('load', adjustSceneSize);
-    window.addEventListener('resize', adjustSceneSize);
+    // Adjust scene on page load and window resize
+    window.addEventListener('load', adjustScene);
+    window.addEventListener('resize', adjustScene);
   </script>
 </body>
 </html>
